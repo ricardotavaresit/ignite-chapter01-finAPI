@@ -24,6 +24,17 @@ function verifyIfExistsAccountCPF(request, response, next){
 
 
 /**
+* @returns {String} - 200 OK
+* @returns {String} - 400 Customer not found
+*/
+app.get("/statement", verifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+   
+    return response.status(200).json(customer.statement);
+});
+
+
+/**
 * @param {String} - cpf
 * @param {number} - name
 * @param {number} - uuid
@@ -41,20 +52,38 @@ app.post("/account", (request, response) => {
         cpf,
         name, 
         id: uuidv4(), 
-        statment:[]
+        statement:[]
     });
     return response.status(201).send();
 });
 
-
 /**
-* @returns {String} - 200 OK
-* @returns {String} - 400 Customer not found
-*/
-app.get("/account", verifyIfExistsAccountCPF, (request, response) => {
+ * 
+ */
+app.post("/deposit", (request, response) => {
+
+    return "OK";
+
+    const {description, amount } = request.body;
+
     const { customer } = request;
-   
-    return response.status(200).json(customer.statment);
+
+    return response.status(201).json(customer);
+
+/*
+    const statementOperation = {
+        description, 
+        amount, 
+        create_at: new Date(), 
+        type: "credit"
+    }
+
+    customer.statement.push(statementOperation);
+
+    return response.status(201).send();
+    */
 });
+
+
 
 app.listen(port, () => console.log(`Running at: ${port}`))
