@@ -54,34 +54,28 @@ app.post("/account", (request, response) => {
         id: uuidv4(), 
         statement:[]
     });
-    return response.status(201).send();
+    return response.status(201).json(customers);
 });
 
 /**
  * 
  */
-app.post("/deposit", (request, response) => {
-
-    return "OK";
+app.post("/deposit", verifyIfExistsAccountCPF, (request, response) => {
 
     const {description, amount } = request.body;
 
     const { customer } = request;
 
-    return response.status(201).json(customer);
-
-/*
     const statementOperation = {
         description, 
         amount, 
         create_at: new Date(), 
         type: "credit"
-    }
+    };
 
     customer.statement.push(statementOperation);
 
     return response.status(201).send();
-    */
 });
 
 
