@@ -16,13 +16,10 @@ Tecnologies:
 - Express;
 - JavaScript;
 
-DataBases:
-
-- MongoDB;
-
 Dependencies:
 
 - Express;
+- uuid;
 
 ## Contact Us
 
