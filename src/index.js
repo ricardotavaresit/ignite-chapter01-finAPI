@@ -35,8 +35,6 @@ function getBalance(statement){
     return balance;
 }
 
-
-
 /**
 * @returns {String} - 200 OK
 * @returns {String} - 400 Customer not found
@@ -130,6 +128,42 @@ app.post("/withdraw", verifyIfExistsAccountCPF, (request, response) => {
     return response.status(201).send();
 });
 
+
+app.put("/account", verifyIfExistsAccountCPF, (request, response) => {
+    const { name } = request.body;
+    const { customer } = request;
+
+    customer.name = name;
+
+    return response.status(201).send();
+});
+
+app.get("/account", verifyIfExistsAccountCPF, (request, response) => {
+
+    const { customer } = request;
+
+    return response.status(200).json(customer);
+});
+
+app.delete("/account", verifyIfExistsAccountCPF, (request, response) => {
+
+    const { customer } = request;
+
+    const index = customers.findIndex( (cust) => cust.cpf === customer.cpf );
+ 
+     customers.splice(index, 1);
+
+    return response.status(200).json(customers);
+});
+
+app.get("/balance", verifyIfExistsAccountCPF, (request, response) => {
+    const { customer } = request;
+
+    const balance = getBalance(customer.statement);
+
+    return response.status(200).json(balance);
+
+});
 
 
 
